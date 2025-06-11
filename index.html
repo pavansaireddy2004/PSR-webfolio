@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Portfolio of Pavan Sai Reddy, a web artist and engineering student.">
+  <meta name="keywords" content="Pavan Sai Reddy, web development, portfolio, engineering student">
+  <title>SATTU PAVAN SAI REDDY</title>
+  
+  <!-- Include styles and libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #00ffcc;
+      min-height: 100vh;
+      transition: 0.3s ease;
+      overflow: auto; /* Allow scrolling */
+    }
+
+    body.light {
+      background: #f0f0f0;
+      color: #222;
+    }
+
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      border: 1px solid #00ffcc;
+      background: transparent;
+      color: inherit;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .start-button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      background: #fff;
+      transform: scale(1.1);
+    }
+
+    #mainLayout {
+      display: none;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 10px;
+      border-right: 2px solid #00ffcc;
+    }
+
+    .sidebar button {
+      background: none;
+      border: 1px solid #00ffcc;
+      color: inherit;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .sidebar button:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+
+    .content-area {
+      padding: 30px;
+      border: 2px solid #00ffcc;
+      border-radius: 12px;
+      min-height: 300px;
+      max-height: 80vh; /* Set a maximum height */
+      overflow-y: auto; /* Allow vertical scrolling */
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+
+    p {
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      #mainLayout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .sidebar button {
+        flex: 1 1 40%;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Particles.js background */
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Behind other content */
+    }
+
+    /* Additional styles for better spacing */
+    .certificate-section {
+      margin-bottom: 20px;
+    }
+
+    .certificate-section h3 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .certificate-section ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .certificate-section li {
+      margin-bottom: 10px;
+    }
+
+    hr {
+      border: 1px dashed #00ffcc;
+      margin: 25px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div> <!-- Particles.js Background -->
+
+<button id="themeToggle" onclick="toggleTheme()">🌓</button>
+
+<!-- Welcome Screen -->
+<div id="welcomeScreen" class="centered" data-aos="fade-up">
+  <h1 id="typed"></h1> <!-- Typed.js will populate this -->
+  <p class="tagline">Engineering student + Web Artist ⚡ Building experiences that speak louder than words</p>
+  <button class="start-button" onclick="startPortfolio()">START</button>
+</div>
+
+<!-- Main Portfolio Layout -->
+<div id="mainLayout">
+  <div class="sidebar">
+    <button onclick="loadContent('about')">👋 About</button>
+    <button onclick="loadContent('education')">🎓 Education</button>
+    <button onclick="loadContent('skills')">💻 Skills</button>
+    <button onclick="loadContent('projects')">📁 Projects</button>
+    <button onclick="loadContent('internship')">💼 Internship</button>
+    <button onclick="loadContent('certificates')">📜 Certificates</button>
+    <button onclick="loadContent('networks')">🌐 Networks</button>
+    <button onclick="loadContent('recognitions')">🏆 Recognitions</button>
+    <button onclick="loadContent('contact')">📞 Contact</button>
+  </div>
+  <div class="content-area" id="contentArea">
+    <h2>Welcome!</h2>
+    <p>Select a section from the left to view details.</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+
+<script>
+  // Initialize Particles.js
+  particlesJS.load('particles-js', 'https://cdn.rawgit.com/VincentGarreau/particles.js/master/particles.json', function() {
+    console.log('Particles.js loaded');
+  });
+
+  // Initialize AOS
+  AOS.init();
+
+  // Initialize Typed.js
+  var options = {
+    strings: ["Welcome to my Portfolio!", "I'm Pavan Sai Reddy."],
+    typeSpeed: 50,
+    backSpeed: 25,
+    loop: true
+  };
+  var typed = new Typed("#typed", options);
+
+  // Theme toggle function
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  }
+
+  window.onload = () => {
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+    }
+  };
+
+  // Start portfolio function
+  function startPortfolio() {
+    document.getElementById("welcomeScreen").style.display = "none";
+    document.getElementById("mainLayout").style.display = "grid";
+  }
+
+  // Load content function
+  function loadContent(section) {
+    const content = {
+      about: `
+        <h2 data-aos="fade-up">👋 About Me</h2>
+        <p data-aos="fade-up">I'm PAVAN, who finds love in technology 💻. I didn't choose Tech Domain just for a degree. I find it exciting that even a small piece of code can create something useful. I enjoy building things, designing web pages, and experimenting with graphics. I use AI to support my learning and growth.</p>
+        <p data-aos="fade-up">Currently a computer science major, I'm interested in becoming a skilled and creative full-stack developer. Personally, I believe the front-end plays a huge role in how users connect with a product, which is why I started there. But over time, I’ve also developed a strong interest in the logic and structure behind the scenes — the back-end.</p>
+        <p data-aos="fade-up">This field keeps me curious, helps me learn new things, and makes me want to keep improving every day.</p>
+      `,
+      education: `
+        <h2 data-aos="fade-up">🎓 Education</h2>
+        <p data-aos="fade-up">
+          <b>Bachelor of Technology in Computer Science and Engineering</b><br>
+          <i>Mohan Babu University, Tirupati, Andhra Pradesh</i><br>
+          2021 – 2026 (Expected)<br>
+          GPA: <b>8.40 / 10</b>
+        </p>
+      `,
+      skills: `
+        <h2 data-aos="fade-up">💻 Technical Skills</h2>
+        <p data-aos="fade-up">
+          <b>Programming Languages</b><br>
+          JavaScript, Python, Java, C
+        </p>
+        <hr>
+        <p data-aos="fade-up">
+          <b>Front-end Development</b><br>
+          HTML5, CSS3, JavaScript, React.js, Tailwind CSS
+        </p>
+        <hr>
+        <p data-aos="fade-up">
+          <b>Back-end Development</b><br>
+          Node.js, Express.js, MongoDB, MySQL
+        </p>
+        <hr>
+        <p data-aos="fade-up">
+          <b>Frameworks & Libraries</b><br>
+          React, Bootstrap, Tailwind CSS, jQuery
+        </p>
+        <hr>
+        <p data-aos="fade-up">
+          <b>Other Tools & Skills</b><br>
+          Git, GitHub, Figma, REST APIs, Responsive Design
+        </p>
+      `,
+      projects: `
+        <h2 data-aos="fade-up">📁 Projects</h2>
+        <div class="project" data-aos="fade-up">
+          <h3>Courier Management System – Web Application</h3>
+          <p><strong>Description:</strong><br>
+            Developed a responsive web application to streamline courier management by integrating a comprehensive tracking system and a user-friendly interface. The system enables efficient order management, real-time tracking, and better communication between stakeholders.
+          </p>
+          <ul>
+            <li><strong>Order Management:</strong> Users can create/manage courier requests with sender & receiver details, package info (weight, dimensions), and service type.</li>
+            <li><strong>Real-time Tracking:</strong> Shipment status tracked via unique tracking IDs; updates triggered by drivers using a mobile interface.</li>
+            <li><strong>User Roles & Permissions:</strong> Roles like Administrator, Dispatcher, Courier, and Customer with tailored access and functionality.</li>
+            <li><strong>Dispatch Management:</strong> Delivery tasks assigned to couriers based on location and availability.</li>
+            <li><strong>Notifications:</strong> Automated email/SMS alerts for shipment updates.</li>
+            <li><strong>Additional Features:</strong> Proof of Delivery, Billing System, and Reporting Module.</li>
+          </ul>
+          <p><strong>Technology Stack:</strong><br>
+            <b>Frontend:</b> HTML, CSS, JavaScript<br>
+            <b>Backend:</b> Node.js, Express.js<br>
+            <b>Database:</b> MongoDB<br>
+            <b>Other Tools:</b> GitHub, Postman, Firebase Authentication
+          </p>
+          <p><strong>Target Users:</strong><br>
+            <b>Courier Staff:</b> Admins, dispatchers, and delivery agents using the system for operations.<br>
+            <b>Customers:</b> Individuals/businesses placing orders and tracking deliveries.
+          </p>
+          <p><a href="https://github.com/pavansaireddy2004/Courier-Management-System" target="_blank">🔗 View Project on GitHub</a></p>
+          <hr>
+        </div>
+      `,
+      internship: `
+        <h2 data-aos="fade-up">💼 Internship</h2>
+        <hr>
+        <p data-aos="fade-up"><strong>Artificial Intelligence & Machine Learning Intern</strong><br>
+        <strong>Andhra Pradesh State Skill Development Corporation (APSSDC)</strong> — Remote<br>
+        <strong>📅 Duration:</strong> June 2024 – July 2024</p>
+
+        <h4>Role Summary:</h4>
+        <p data-aos="fade-up">Completed a structured, short-term internship focused on practical implementation of core AI and ML concepts using real-world datasets.</p>
+
+        <h4>Key Responsibilities & Achievements:</h4>
+        <ul data-aos="fade-up">
+          <li>Utilized <strong>Python</strong> as the primary language for development, emphasizing clean, readable, and efficient code in <strong>Jupyter Notebooks</strong>.</li>
+          <li>Applied <strong>NumPy</strong> and <strong>Pandas</strong> for data manipulation, cleaning, and analysis including handling missing values, normalization, and feature engineering.</li>
+          <li>Developed and evaluated models using <strong>Scikit-Learn</strong> for tasks like classification, regression, and clustering.</li>
+          <li>Worked on project-based learning modules including:
+            <ul>
+              <li>Sentiment Analysis (NLP) on textual data.</li>
+              <li>Object Detection (Computer Vision) using annotated datasets.</li>
+            </ul>
+          </li>
+          <li>Built and deployed models using <strong>IBM Watson Studio</strong>, gaining hands-on experience in cloud-based AI workflows and model deployment.</li>
+          <li>Strengthened skills in data preprocessing, tokenization, and augmentation to improve model accuracy and robustness.</li>
+          <li>Participated in peer code reviews, collaborative projects, and technical webinars covering AI ethics and industry trends.</li>
+          <li>Developed a portfolio of end-to-end ML projects in Jupyter Notebooks demonstrating data preparation, modeling, evaluation, and deployment.</li>
+        </ul>
+
+        <p data-aos="fade-up"><strong>Technologies & Tools:</strong> Python, NumPy, Pandas, Scikit-Learn, IBM SkillsBuild, IBM Watson Studio, Jupyter Notebooks</p>
+        <hr>
+
+        <h3>💼 Data Science Intern</h3>
+        <p><strong>Prodigy Infotech</strong> — Remote</p>
+        <p><strong>📅 Duration:</strong> June 2024</p>
+        <h4>Role Summary:</h4>
+        <p>Completed a project-based, remote internship focused on real-world problem-solving using data analysis, machine learning, and data visualization.</p>
+        <h4>Key Responsibilities & Achievements:</h4>
+        <ul>
+          <li>Utilized <strong>Python</strong> for data scripting, analysis, and model development in <strong>Jupyter Notebooks</strong>.</li>
+          <li>Applied <strong>Pandas</strong> for data cleaning, transformation, and exploratory data analysis (EDA) on structured datasets.</li>
+          <li>Created insightful visualizations using <strong>Matplotlib</strong> and <strong>Seaborn</strong> to highlight trends, patterns, and outliers.</li>
+          <li>Developed and evaluated ML models using <strong>Scikit-Learn</strong> for:
+            <ul>
+              <li>📈 Regression & Classification</li>
+              <li>🧩 Clustering</li>
+            </ul>
+          </li>
+          <li>Completed end-to-end projects including:
+            <ul>
+              <li>👥 <strong>Customer Segmentation</strong> using clustering algorithms.</li>
+              <li>📊 <strong>Predictive Analytics</strong> for business decision-making.</li>
+              <li>🗂️ <strong>Exploratory Data Analysis (EDA)</strong> of large datasets.</li>
+            </ul>
+          </li>
+          <li>Documented findings with visual storytelling and communicated results to both technical and non-technical audiences.</li>
+          <li>Participated in code reviews, peer discussions, and mentor-led sessions to refine problem-solving and collaboration skills.</li>
+        </ul>
+        <hr>
+      
+        <h3>💼 Software Engineering Intern</h3>
+        <p><strong>Company:</strong> Walmart Global Tech – Virtual</p>
+        <p><strong>Duration:</strong> December 2024 – January 2025</p>
+        <ul>
+          <li>Completed a competitive, hands-on internship focused on real-world software engineering within a global tech environment.</li>
+          <li>Contributed to the full software development lifecycle: requirements gathering, design, implementation, testing, and deployment.</li>
+          <li>Developed features and automated workflows using Python, Java, or JavaScript, adhering to modern development standards.</li>
+          <li>Used Git and GitHub for version control, collaboration, and continuous code integration.</li>
+          <li>Practiced Agile methodologies by participating in daily stand-ups, sprint planning, and retrospectives within cross-functional teams.</li>
+          <li>Applied debugging techniques and wrote unit and integration tests to ensure high-quality, reliable code.</li>
+          <li>Collaborated on real-world projects involving scalable web applications, RESTful API development, and workflow automation.</li>
+                    <li>Attended workshops on cloud platforms (AWS, Azure), CI/CD pipelines, and engineering best practices.</li>
+          <li>Engaged in code reviews, pair programming, and mentoring sessions with experienced software engineers.</li>
+          <li>Emphasized writing clean, maintainable, and well-documented code following industry standards.</li>
+        </ul>
+        <p><strong>Technologies & Tools:</strong> Python, Java, JavaScript, Git, GitHub, Agile, CI/CD, AWS, Azure, REST APIs, Unit Testing</p>
+        <hr>
+
+        <h3>💼 Software Engineering Intern</h3>
+        <p><strong>Company:</strong> Accenture Tech – Virtual</p>
+        <p><strong>Duration:</strong> January 2025</p>
+        <ul>
+          <li>Participated in a virtual internship focused on enterprise software development and technology consulting.</li>
+          <li>Contributed to client-facing projects involving web/mobile app development, API integration, and automation.</li>
+          <li>Developed software using Java, Python, JavaScript, or C#, based on project needs.</li>
+          <li>Engaged in all phases of the Software Development Lifecycle (SDLC).</li>
+          <li>Practiced Agile and DevOps methodologies in daily stand-ups and sprints.</li>
+          <li>Used Git for version control, collaborated via pull requests and code reviews.</li>
+          <li>Worked with cloud platforms like Microsoft Azure, AWS, or Google Cloud.</li>
+          <li>Collaborated with UX designers, analysts, and test engineers to deliver solutions.</li>
+          <li>Attended training on new tech, Agile practices, and enterprise architecture.</li>
+          <li>Transformed business requirements into reliable technical solutions.</li>
+        </ul>
+        <p><strong>Technologies & Tools:</strong> Java, Python, JavaScript, C#, Git, Agile, CI/CD, Azure, AWS, GCP, REST APIs, DevOps</p>
+        <hr>
+      `,
+      certificates: `
+        <h2 data-aos="fade-up">📜 Certificates</h2>
+        <div class="certificate-section">
+          <h3>🧠 Programming & Development Certifications:</h3>
+          <ul>
+            <li>
+              Python (Basic) Certificate – 
+              <a href="https://www.hackerrank.com/certificates/iframe/b54e4622609b" target="_blank">
+                HackerRank 🔗
+              </a>
+            </li>
+            <li>
+              Java (Basic) Certificate – 
+              <a href="https://www.hackerrank.com/certificates/iframe/7918eec445ea" target="_blank">
+                HackerRank 🔗
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="certificate-section">
+          <h3>🤖 Artificial Intelligence & Data Science Certifications:</h3>
+          <ul>
+            <li>
+              Data Analytics Essentials – Cisco (Jan 3, 2025) – 
+              <a href="https://www.netacad.com/certificates?issuanceId=de5fefe8-13c9-4c36-a68c-cdf02648b89c" target="_blank">
+                Cisco NetAcad 🔗
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="certificate-section">
+          <h3>💼 CRM & Business Technology Certifications:</h3>
+          <ul>
+            <li>
+              Salesforce AI Associate – (Nov 1, 2024) – 
+              <a href="https://www.salesforce.com/trailblazer/w33rzvmga5kfma447v" target="_blank">
+                Salesforce 🔗
+              </a>
+            </li>
+          </ul>
+        </div>
+      `,
+      networks: `
+        <h2 data-aos="fade-up">🌐 Networks</h2>
+        <p data-aos="fade-up">Here are some of the professional networks I am part of:</p>
+        <ul>
+          <li data-aos="fade-up">GitHub: <a href="https://github.com/pavansaireddy2004" target="_blank">pavansaireddy2004</a></li>
+          <li data-aos="fade-up">LinkedIn: <a href="https://www.linkedin.com/in/pavan-reddy-76756229b" target="_blank">Pavan Sai Reddy</a></li>
+          <li data-aos="fade-up">Unstop: <a href="https://unstop.com/u/PAVANSAIREDDY22" target="_blank">SATTU PAVAN SAI REDDY22 - Unstop</a></li>
+        </ul>
+      `,
+      recognitions: `
+        <h2 data-aos="fade-up">🏆 Recognitions</h2>
+        <p data-aos="fade-up">Throughout my journey, I have received several recognitions:</p>
+        <ul>
+          <li data-aos="fade-up">
+            This certificate is awarded by the Indian Institute of Technology (IIT) Madras as a recognition of the participant's dedication and effort in taking part in Shaastra 2025.
+            <a href="https://unstop.com/certificate-preview/e941867b-795a-40d4-8308-9c97121e6aab" target="_blank">[View Certificate]</a>
+          </li>
+        </ul>
+      `,
+      contact: `
+        <h2 data-aos="fade-up">📞 Contact</h2>
+        <p data-aos="fade-up">Email: pavan.reddy1750@gmail.com </p>
+        
+      `
+    };
+
+    const contentArea = document.getElementById("contentArea");
+    contentArea.classList.remove('fade-in'); // Remove class to reset animation
+    void contentArea.offsetWidth; // Trigger reflow
+    contentArea.classList.add('fade-in'); // Add class for animation
+    contentArea.innerHTML = content[section];
+  }
+</script>
+
+</body>
+</html>
